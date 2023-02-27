@@ -6,6 +6,14 @@ namespace Permissive.Data {
         private string status_message = "";
         private int status_code = 0;
 
+        public int get_code() {
+            return status_code;
+        }
+
+        public string get_message() {
+            return status_message;
+        }
+
         public (int status, string message) get_status() {
             return (status: status_code, message: status_message);
         }

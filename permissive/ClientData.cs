@@ -4,7 +4,10 @@ using Permissive.Validator;
 namespace Permissive.Data {
     public class ClientData {
         private readonly Guid id = Guid.NewGuid();
-        private StatusData status = StatusGenerator.CreateStatusData();
+        private StatusData status = StatusGenerator.CreateStatusData(
+            status: 199,
+            message: "created!"
+        );
         private string client_base_ip = "";
         private string client_full_ip = "";
         private int client_port = 0;
