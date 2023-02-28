@@ -4,17 +4,28 @@
 
 using Permissive.Data;
 using Permissive.Generator;
+using Permissive.Controller;
+using System.Text;
 
-ExchangeData exchangeData = ExchangeGenerator.CreateExchangeData();
-exchangeData.assign_data(
-    data: System.Text.Encoding.ASCII.GetBytes(
-        "i'm some data that is going to be exchanged!"
+ExchangeController exchange = ExchangeGenerator.CreateExchangeController();
+
+byte[] data = System.Text.Encoding.ASCII.GetBytes("test message!");
+
+bool success = exchange.publish_data(
+    data: data
+);
+
+Console.WriteLine("Exchange not Authorized yet...");
+Console.WriteLine("Data Published?: " + success);
+Console.WriteLine("Attempted Data Retrieval: " + Encoding.ASCII.GetString(
+    exchange.get_data()
     )
 );
 
-Console.WriteLine(System.Text.Encoding.ASCII.GetString(exchangeData.get_data()));
+exchange.authorize_exchange();
+Console.WriteLine("Exchange Authorized!");
 
-exchangeData.update_client_authorized(true);
-exchangeData.update_guard_authorized(true);
-
-Console.WriteLine(System.Text.Encoding.ASCII.GetString(exchangeData.get_data()));
+Console.WriteLine("Attempted Data Retrieval: " + Encoding.ASCII.GetString(
+    exchange.get_data()
+    )
+);
