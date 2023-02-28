@@ -1,29 +1,20 @@
 ﻿using Permissive.Data;
 using Permissive.Generator;
+using Permissive.Controller;
 
 using System.Text;
 
-
-ExchangeData exchange = ExchangeGenerator.CreateExchangeData();
-
-// I'm giving it some data!
-exchange.PublishData(
-    SecretData: Encoding.ASCII.GetBytes("I'm a secret message!"),
-    DefaultData: Encoding.ASCII.GetBytes("I'm a default message!")
+ExchangeController exchange = ExchangeGenerator.CreateExchangeController(
+    DefaultData: Encoding.ASCII.GetBytes("Default Message!")
 );
 
-// Is not authorized, will return the DefaultData.
-Console.WriteLine("Current Data: " + exchange.GetDataAsString());
+exchange.PublishData(
+    SecretData: Encoding.ASCII.GetBytes("Secret Message!")
+);
 
-// Giving authorization to return the SecretData.
-exchange.GrantAuthorization();
-Console.WriteLine("Authorized!");
+Console.WriteLine(exchange.GetDataAsString());
 
-// Will give SecretData now that it is authorized.
-Console.WriteLine("Current Data: " + exchange.GetDataAsString());
+exchange.UpdateAuthorized(true);
 
-exchange.DenyAuthorization();
-Console.WriteLine("Deauthorized!");
+Console.WriteLine(exchange.GetDataAsString());
 
-// No longer authorized, will return the DefaultData.
-Console.WriteLine("Current Data: " + exchange.GetDataAsString());

@@ -22,7 +22,7 @@ namespace Permissive.Data {
                 exchange_data = SecretData; 
                 data_retrieved = true;
 
-                if (DefaultData.Length != 0) {
+                if (DefaultData.Length is not 0) {
                     default_data = DefaultData;
                 }
 
