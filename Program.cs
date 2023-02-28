@@ -1,14 +1,15 @@
 ﻿/*
-    Screw the plan, we ball.
-    I forgor :skull: i'm meant to make the scaffold not my target.
+    Oops I shouldn't of done the client/status structure!
 */  
 
 using Permissive.Data;
 using Permissive.Generator;
 
-RequestData request = RequestGenerator.CreateRequestData(
-    name: "test",
-    type: "debug"
-);
+ExchangeData exchangeData = ExchangeGenerator.CreateExchangeData();
 
-Console.WriteLine($"[Name] {request.get_name()}\n[Type] {request.get_type()}");
+List<Byte> raw_data = new List<Byte>();
+string str_data = "test data!";
+
+
+
+Console.WriteLine(exchangeData);

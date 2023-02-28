@@ -1,3 +1,0 @@
-namespace Permissive.Generator {
-    
-}
