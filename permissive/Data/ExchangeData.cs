@@ -3,11 +3,8 @@ namespace Permissive.Data {
         private readonly Guid id = Guid.NewGuid();
         private bool client_authorized = false;
         private bool guard_authorized = false;
-        private protected List<Byte> target_data = new List<Byte>();
-
-        public void assign_data(List<Byte> data) {
-            target_data = data;
-        }
+        private bool data_assigned = false;
+        private byte[] target_data = new byte[] {};
 
         public void update_client_authorized(bool authorized) {
             client_authorized = authorized;
@@ -17,6 +14,18 @@ namespace Permissive.Data {
             guard_authorized = authorized;
         }
 
+        public bool assign_data(byte[] data) {
+            if (data_assigned is false) {
+                target_data = data;
+                data_assigned = true;
+                return true;
+            }
+            return false;
+        }
+
+        public bool is_exchange_authorized() {
+            return is_client_authorized() && is_guard_authorized();
+        }
 
         public bool is_client_authorized() {
             return client_authorized;
@@ -30,11 +39,11 @@ namespace Permissive.Data {
             return id;
         }
 
-        public List<Byte> get_data() {
-            if (is_client_authorized() && is_guard_authorized()) {
+        public byte[] get_data() {
+            if (is_exchange_authorized()) {
                 return target_data;
             }
-            return new List<Byte>();
+            return new byte[] {};
         }
     }
 }
